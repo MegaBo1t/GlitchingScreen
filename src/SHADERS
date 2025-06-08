@@ -1,0 +1,41 @@
+const char* vertexShaderSource = 
+R"(
+
+#version 330 core
+  
+layout (location = 0) in vec3 aPos;
+layout (location = 1) in vec3 aColor;
+
+uniform mat4 rotation;
+
+out vec3 vertexColor;
+
+void main()
+{
+  gl_Position = rotation * vec4(aPos, 1.0f);
+  vertexColor = aColor;
+}
+
+)";
+
+const char* fragShaderSource = 
+R"(
+
+#version 330 core
+
+in vec3 vertexColor;
+out vec4 color;
+
+uniform float time;
+
+
+void main()
+{
+  float pulse = 0.5f + 0.5f * sin(time);
+  vec3 animatedColor = vertexColor * pulse;
+  color = vec4(animatedColor, 1.0f);
+
+}
+
+)"; 
+
